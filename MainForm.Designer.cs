@@ -31,21 +31,23 @@
             this.DgvList = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbClientIp = new System.Windows.Forms.TextBox();
+            this.tbClientPort = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tbServerIp = new System.Windows.Forms.TextBox();
+            this.tbServerPort = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
+            this.btnMonitor = new System.Windows.Forms.Button();
+            this.btnConn1 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgvList)).BeginInit();
             this.SuspendLayout();
             // 
             // DgvList
             // 
-            this.DgvList.AllowUserToAddRows = false;
             this.DgvList.AllowUserToDeleteRows = false;
             this.DgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvList.Location = new System.Drawing.Point(30, 153);
@@ -71,21 +73,21 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "TCP Port";
             // 
-            // textBox1
+            // tbClientIp
             // 
-            this.textBox1.Location = new System.Drawing.Point(104, 41);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "192.168.1.1";
+            this.tbClientIp.Location = new System.Drawing.Point(104, 41);
+            this.tbClientIp.Name = "tbClientIp";
+            this.tbClientIp.Size = new System.Drawing.Size(100, 20);
+            this.tbClientIp.TabIndex = 2;
+            this.tbClientIp.Text = "127.0.0.1";
             // 
-            // textBox2
+            // tbClientPort
             // 
-            this.textBox2.Location = new System.Drawing.Point(102, 71);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.Text = "502";
+            this.tbClientPort.Location = new System.Drawing.Point(102, 71);
+            this.tbClientPort.Name = "tbClientPort";
+            this.tbClientPort.Size = new System.Drawing.Size(100, 20);
+            this.tbClientPort.TabIndex = 2;
+            this.tbClientPort.Text = "502";
             // 
             // label3
             // 
@@ -105,21 +107,21 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "TCP Port";
             // 
-            // textBox3
+            // tbServerIp
             // 
-            this.textBox3.Location = new System.Drawing.Point(489, 41);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 2;
-            this.textBox3.Text = "192.168.2.1";
+            this.tbServerIp.Location = new System.Drawing.Point(489, 41);
+            this.tbServerIp.Name = "tbServerIp";
+            this.tbServerIp.Size = new System.Drawing.Size(100, 20);
+            this.tbServerIp.TabIndex = 2;
+            this.tbServerIp.Text = "192.168.2.1";
             // 
-            // textBox4
+            // tbServerPort
             // 
-            this.textBox4.Location = new System.Drawing.Point(487, 71);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 2;
-            this.textBox4.Text = "502";
+            this.tbServerPort.Location = new System.Drawing.Point(487, 71);
+            this.tbServerPort.Name = "tbServerPort";
+            this.tbServerPort.Size = new System.Drawing.Size(100, 20);
+            this.tbServerPort.TabIndex = 2;
+            this.tbServerPort.Text = "502";
             // 
             // label5
             // 
@@ -148,17 +150,50 @@
             this.textBox5.TabIndex = 3;
             this.textBox5.Text = "status:";
             // 
+            // btnMonitor
+            // 
+            this.btnMonitor.Location = new System.Drawing.Point(845, 102);
+            this.btnMonitor.Name = "btnMonitor";
+            this.btnMonitor.Size = new System.Drawing.Size(82, 40);
+            this.btnMonitor.TabIndex = 4;
+            this.btnMonitor.Text = "Monitoring";
+            this.btnMonitor.UseVisualStyleBackColor = true;
+            this.btnMonitor.Click += new System.EventHandler(this.btnMonitor_Click);
+            // 
+            // btnConn1
+            // 
+            this.btnConn1.Location = new System.Drawing.Point(665, 55);
+            this.btnConn1.Name = "btnConn1";
+            this.btnConn1.Size = new System.Drawing.Size(87, 36);
+            this.btnConn1.TabIndex = 5;
+            this.btnConn1.Text = "Conntection1";
+            this.btnConn1.UseVisualStyleBackColor = true;
+            this.btnConn1.Click += new System.EventHandler(this.btnConn1_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(758, 55);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(88, 36);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "stop";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(978, 557);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnConn1);
+            this.Controls.Add(this.btnMonitor);
             this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.tbServerPort);
+            this.Controls.Add(this.tbClientPort);
+            this.Controls.Add(this.tbServerIp);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbClientIp);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
@@ -179,15 +214,18 @@
         private System.Windows.Forms.DataGridView DgvList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbClientIp;
+        private System.Windows.Forms.TextBox tbClientPort;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tbServerIp;
+        private System.Windows.Forms.TextBox tbServerPort;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Button btnMonitor;
+        private System.Windows.Forms.Button btnConn1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
