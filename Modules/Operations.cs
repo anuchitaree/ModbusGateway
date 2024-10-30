@@ -1,7 +1,9 @@
-﻿using ModbusGateway.Models;
+﻿using EasyModbus;
+using ModbusGateway.Models;
 using ModbusGateway.Properties;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ModbusGateway.Modules
@@ -57,5 +59,60 @@ namespace ModbusGateway.Modules
         {
             return string.Join("", str.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
         }
+
+
+        private static void Connection(ModbusClient modbusClient, ModbusClient modbusServer,  SetModbus client, SetModbus server)
+        {
+            try
+            {
+                if (client.Connect == true)
+                {
+                   
+                    int timeout = 5000;
+                    modbusClient.IPAddress = client.IpAddress;
+                    modbusClient.Port = client.Port;
+                    modbusClient.UnitIdentifier = client.UnitIdentify;
+                    modbusClient.ConnectionTimeout = timeout;
+                    modbusClient.Connect();
+                }
+                else
+                {
+                    modbusClient.Disconnect();
+                }
+
+                if (server.Connect == true)
+                {
+
+                    int timeout = 5000;
+                    modbusServer.IPAddress = server.IpAddress;
+                    modbusServer.Port = server.Port;
+                    modbusServer.UnitIdentifier = server.UnitIdentify;
+                    modbusServer.ConnectionTimeout = timeout;
+                    modbusServer.Connect();
+                }
+                else
+                {
+                    modbusServer.Disconnect();
+                }
+
+
+            }
+            catch (EasyModbus.Exceptions.ConnectionException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (System.Net.Sockets.SocketException ex)
+            {
+                Console.WriteLine(ex.Message);
+                //lbStatus.Text = "Status : Connection timed out";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+
+        }
+
     }
 }

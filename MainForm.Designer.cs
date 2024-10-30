@@ -79,7 +79,7 @@
             this.tbClientIp.Name = "tbClientIp";
             this.tbClientIp.Size = new System.Drawing.Size(100, 20);
             this.tbClientIp.TabIndex = 2;
-            this.tbClientIp.Text = "127.0.0.1";
+            this.tbClientIp.Text = "192.168.1.1";
             // 
             // tbClientPort
             // 
@@ -166,7 +166,7 @@
             this.btnConn1.Name = "btnConn1";
             this.btnConn1.Size = new System.Drawing.Size(87, 36);
             this.btnConn1.TabIndex = 5;
-            this.btnConn1.Text = "Conntection1";
+            this.btnConn1.Text = "Conntection";
             this.btnConn1.UseVisualStyleBackColor = true;
             this.btnConn1.Click += new System.EventHandler(this.btnConn1_Click);
             // 
