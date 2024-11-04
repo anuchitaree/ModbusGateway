@@ -4,7 +4,6 @@ using ModbusGateway.Modules;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
 
@@ -30,7 +29,7 @@ namespace ModbusGateway
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            string[] header = new string[] { "No", "Real time data", "UnitIdentifier", "InputRegAddr", "Input L", "Input H", "Output L", "Output H", "ServerSide InputRegAddr" };
+            string[] header = new string[] { "No", "Real-time-data", "UnitIdentifier", "InputRegAddr", "Input H", "Input L", "Output H", "Output L", "ServerSide InputRegAddr" };
             int[] width = new int[] { 50, 100, 100, 100, 70, 100, 70, 100, 120 };
 
             //InitDataGridView.Pattern_1(DgvList, header, width);
@@ -39,58 +38,7 @@ namespace ModbusGateway
 
             //Connection(1,true);
         }
-        //private void Connection(byte unitIdentifier,bool connect)
-        //{
-        //    try
-        //    {
-        //        if (connect == true)
-        //        {
-        //            string ip = tbClientIp.Text.Trim();
-        //            int port = int.Parse(tbClientPort.Text.Trim());
-        //            int timeout = 5000;
-        //            modbusClient.IPAddress = "192.168.1.1";
-        //            modbusClient.Port = port;
-        //            modbusClient.UnitIdentifier = unitIdentifier;
-        //            modbusClient.ConnectionTimeout = timeout;
-        //            modbusClient.Connect();
-        //            Thread.Sleep(10);
-
-        //            modbusServer.IPAddress = "192.168.2.1";
-        //            modbusServer.Port = port;
-        //            modbusServer.UnitIdentifier = unitIdentifier;
-        //            modbusServer.ConnectionTimeout = timeout;
-        //            modbusServer.Connect();
-        //        }
-        //        else
-        //        {
-        //            modbusClient.Disconnect();
-        //            modbusServer.Disconnect();
-        //        }
-        //    }
-        //    catch (EasyModbus.Exceptions.ConnectionException ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //    catch (System.Net.Sockets.SocketException ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        //lbStatus.Text = "Status : Connection timed out";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.ToString());
-        //    }
-           
-
-        //}
-
-        private void timerPoll_Tick(object sender, EventArgs e)
-        {
-
-
-
-
-        }
+      
 
         private void btnMonitor_Click(object sender, EventArgs e)
         {
@@ -102,55 +50,106 @@ namespace ModbusGateway
             {
                 timerPoll.Interval = TimeSpan.FromSeconds(1000);
                 btnMonitor.BackColor = Color.YellowGreen;
-                timerPoll.Tick += timerPoll_Tick;
+                //timerPoll.Tick += timerPoll_Tick;
                 timerPoll.Start();
                 Console.WriteLine("conneted");
             }
             else if (result.Item1 == false || btnMonitor.BackColor == Color.YellowGreen)
             {
                 btnMonitor.BackColor = SystemColors.Control;
-                timerPoll.Tick -= timerPoll_Tick;
+                //timerPoll.Tick -= timerPoll_Tick;
                 timerPoll.Stop();
             }
 
         }
 
-        private void btnConn1_Click(object sender, EventArgs e)
-        {
 
-            var clientsetting = new SetModbus() 
-            {
-                modbusClient=modbusClient,
-                IpAddress = tbClientIp.Text.Trim(),
-                Port = int.Parse(tbClientPort.Text.Trim()
-                
-            };
+        private void ModbusConnection()
+        {
+            string clientIp = tbClientIp.Text.Trim();
+            int clientPort = int.Parse(tbClientPort.Text.Trim());
+
             string serverIp = tbServerIp.Text.Trim();
             int serverPort = int.Parse(tbServerPort.Text.Trim());
+
+
+            try
+            {
+                if (modbusClient.Connected != true)
+                {
+
+                    int timeout = 5000;
+                    modbusClient.IPAddress = clientIp;
+                    modbusClient.Port = clientPort;
+                    modbusClient.UnitIdentifier = byte.Parse(tbClientUnit.Text);
+                    modbusClient.ConnectionTimeout = timeout;
+                    modbusClient.Connect();
+                }
+                else
+                {
+                    modbusClient.Disconnect();
+                }
+
+                if (modbusServer.Connected != true)
+                {
+
+                    int timeout = 5000;
+                    modbusServer.IPAddress = serverIp;
+                    modbusServer.Port = serverPort;
+                    modbusServer.UnitIdentifier = byte.Parse(tbServerUnit.Text); ;
+                    modbusServer.ConnectionTimeout = timeout;
+                    modbusServer.Connect();
+                }
+                else
+                {
+                    modbusServer.Disconnect();
+                }
+
+
+            }
+            catch (EasyModbus.Exceptions.ConnectionException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (System.Net.Sockets.SocketException ex)
+            {
+                Console.WriteLine(ex.Message);
+                //lbStatus.Text = "Status : Connection timed out";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+
+
 
             //Connection(2, true);
             if (modbusClient.Connected == true && modbusServer.Connected == true)
             {
                 Console.WriteLine("Connected !");
             }
-            try
-            {
-                //int[] vals = modbusClient0.ReadHoldingRegisters(0, 10);
-                //Console.WriteLine(vals);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Connection(1, false);
-            //if (modbusClient.Connected != true && modbusServer.Connected != true)
-            //{
-            //    Console.WriteLine("Dis-Connected !");
-            //}
+            
+        }
+
+        private void btnConn1_Click_1(object sender, EventArgs e)
+        {
+            if (btnConn1.Text != "Connected")
+            {
+                btnConn1.BackColor = Color.YellowGreen;
+                btnConn1.Text = "Connected";
+            }
+            else
+            {
+                btnConn1.Text = "Connect";
+                btnConn1.BackColor = SystemColors.Control;
+            }
+            
         }
     }
 }

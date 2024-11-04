@@ -42,7 +42,9 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.btnMonitor = new System.Windows.Forms.Button();
             this.btnConn1 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tbClientUnit = new System.Windows.Forms.TextBox();
+            this.tbServerUnit = new System.Windows.Forms.TextBox();
+            this.txtClientStatus = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgvList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,7 +81,7 @@
             this.tbClientIp.Name = "tbClientIp";
             this.tbClientIp.Size = new System.Drawing.Size(100, 20);
             this.tbClientIp.TabIndex = 2;
-            this.tbClientIp.Text = "192.168.1.1";
+            this.tbClientIp.Text = "127.0.0.1";
             // 
             // tbClientPort
             // 
@@ -113,7 +115,7 @@
             this.tbServerIp.Name = "tbServerIp";
             this.tbServerIp.Size = new System.Drawing.Size(100, 20);
             this.tbServerIp.TabIndex = 2;
-            this.tbServerIp.Text = "192.168.2.1";
+            this.tbServerIp.Text = "127.0.0.1";
             // 
             // tbServerPort
             // 
@@ -168,24 +170,42 @@
             this.btnConn1.TabIndex = 5;
             this.btnConn1.Text = "Conntection";
             this.btnConn1.UseVisualStyleBackColor = true;
-            this.btnConn1.Click += new System.EventHandler(this.btnConn1_Click);
+            this.btnConn1.Click += new System.EventHandler(this.btnConn1_Click_1);
             // 
-            // button1
+            // tbClientUnit
             // 
-            this.button1.Location = new System.Drawing.Point(758, 55);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 36);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "stop";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.tbClientUnit.Location = new System.Drawing.Point(102, 102);
+            this.tbClientUnit.Name = "tbClientUnit";
+            this.tbClientUnit.Size = new System.Drawing.Size(100, 20);
+            this.tbClientUnit.TabIndex = 7;
+            this.tbClientUnit.Text = "1";
+            // 
+            // tbServerUnit
+            // 
+            this.tbServerUnit.Location = new System.Drawing.Point(489, 102);
+            this.tbServerUnit.Name = "tbServerUnit";
+            this.tbServerUnit.Size = new System.Drawing.Size(100, 20);
+            this.tbServerUnit.TabIndex = 7;
+            this.tbServerUnit.Text = "1";
+            // 
+            // txtClientStatus
+            // 
+            this.txtClientStatus.Location = new System.Drawing.Point(104, 13);
+            this.txtClientStatus.Name = "txtClientStatus";
+            this.txtClientStatus.ReadOnly = true;
+            this.txtClientStatus.Size = new System.Drawing.Size(98, 20);
+            this.txtClientStatus.TabIndex = 8;
+            this.txtClientStatus.Text = "status";
+            this.txtClientStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(978, 557);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.txtClientStatus);
+            this.Controls.Add(this.tbServerUnit);
+            this.Controls.Add(this.tbClientUnit);
             this.Controls.Add(this.btnConn1);
             this.Controls.Add(this.btnMonitor);
             this.Controls.Add(this.textBox5);
@@ -225,7 +245,9 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Button btnMonitor;
         private System.Windows.Forms.Button btnConn1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox tbClientUnit;
+        private System.Windows.Forms.TextBox tbServerUnit;
+        private System.Windows.Forms.TextBox txtClientStatus;
     }
 }
 
