@@ -4,6 +4,8 @@ using ModbusGateway.Modules;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
 
@@ -13,8 +15,7 @@ namespace ModbusGateway
     {
         ModbusClient modbusClient = new ModbusClient();
 
-        ModbusClient modbusServer = new ModbusClient();
-
+        ModbusServer modbusServer;
 
         DispatcherTimer timerPollWrite = new DispatcherTimer();
         DispatcherTimer timerPollRead = new DispatcherTimer();
@@ -22,6 +23,12 @@ namespace ModbusGateway
 
         DispatcherTimer timerPoll = new DispatcherTimer();
         private List<Setting> settings = new List<Setting>();
+
+
+        CancellationTokenSource source = new CancellationTokenSource();
+        CancellationToken token;
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -38,7 +45,7 @@ namespace ModbusGateway
 
             //Connection(1,true);
         }
-      
+
 
         private void btnMonitor_Click(object sender, EventArgs e)
         {
@@ -64,45 +71,28 @@ namespace ModbusGateway
         }
 
 
-        private void ModbusConnection()
+        private void ModbusServerConnection()
         {
-            string clientIp = tbClientIp.Text.Trim();
-            int clientPort = int.Parse(tbClientPort.Text.Trim());
-
             string serverIp = tbServerIp.Text.Trim();
             int serverPort = int.Parse(tbServerPort.Text.Trim());
 
 
             try
             {
-                if (modbusClient.Connected != true)
+                if (txtServerStatus.BackColor == SystemColors.Control)
                 {
 
-                    int timeout = 5000;
-                    modbusClient.IPAddress = clientIp;
-                    modbusClient.Port = clientPort;
-                    modbusClient.UnitIdentifier = byte.Parse(tbClientUnit.Text);
-                    modbusClient.ConnectionTimeout = timeout;
-                    modbusClient.Connect();
-                }
-                else
-                {
-                    modbusClient.Disconnect();
-                }
-
-                if (modbusServer.Connected != true)
-                {
-
-                    int timeout = 5000;
-                    modbusServer.IPAddress = serverIp;
+                    modbusServer = new ModbusServer();
                     modbusServer.Port = serverPort;
+
                     modbusServer.UnitIdentifier = byte.Parse(tbServerUnit.Text); ;
-                    modbusServer.ConnectionTimeout = timeout;
-                    modbusServer.Connect();
+                    txtServerStatus.BackColor = Color.LightGreen;
+                    modbusServer.Listen();
                 }
                 else
                 {
-                    modbusServer.Disconnect();
+                    modbusServer.StopListening();
+                    txtServerStatus.BackColor = SystemColors.Control;
                 }
 
 
@@ -114,7 +104,6 @@ namespace ModbusGateway
             catch (System.Net.Sockets.SocketException ex)
             {
                 Console.WriteLine(ex.Message);
-                //lbStatus.Text = "Status : Connection timed out";
             }
             catch (Exception ex)
             {
@@ -123,33 +112,96 @@ namespace ModbusGateway
 
 
 
-
-            //Connection(2, true);
-            if (modbusClient.Connected == true && modbusServer.Connected == true)
-            {
-                Console.WriteLine("Connected !");
-            }
-           
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void ModbusClientConnection(CancellationToken token)
         {
-            
+            Task t1 = Task.Run(() =>
+            {
+                ModbusClientConnection1();
+            }, token);
         }
+        private void ModbusClientConnection1()
+        {
+            string clientIp = "192.168.1.10";//tbClientIp.Text.Trim();
+            int clientPort = int.Parse(tbClientPort.Text.Trim());
+            try
+            {
+                if (modbusClient.Connected != true)
+                {
+
+                    int timeout = 5000;
+                    modbusClient.IPAddress = clientIp;
+                    modbusClient.Port = clientPort;
+                    modbusClient.UnitIdentifier = byte.Parse(tbClientUnit.Text);
+                    modbusClient.ConnectionTimeout = timeout;
+                    modbusClient.Connect();
+                    txtClientStatus.BackColor = Color.YellowGreen;
+                }
+                else
+                {
+                    modbusClient.Disconnect();
+                    txtClientStatus.BackColor = SystemColors.Control;
+
+                }
+                Console.WriteLine("*");
+            }
+            catch (EasyModbus.Exceptions.ConnectionException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (System.Net.Sockets.SocketException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+
+
+        }
+
 
         private void btnConn1_Click_1(object sender, EventArgs e)
         {
+
+            ModbusServerConnection();
             if (btnConn1.Text != "Connected")
             {
                 btnConn1.BackColor = Color.YellowGreen;
                 btnConn1.Text = "Connected";
+                token = source.Token;
+                ModbusClientConnection(token);
+                //Task task = Task.Run(() =>
+                //{
+                //    ModbusClientConnection();
+                //});
             }
             else
             {
                 btnConn1.Text = "Connect";
                 btnConn1.BackColor = SystemColors.Control;
+                if (source != null)
+                {
+                    source.Cancel();
+                    txtClientStatus.BackColor = SystemColors.Control;
+                }
+                txtServerStatus.BackColor = SystemColors.Control;
+
             }
-            
+            //Task task = Task.Run(() =>
+            //{
+            //    ModbusClientConnection(con);
+            //    // Simulate work with a delay
+            //    //await Task.Delay(5000);
+            //    Console.WriteLine($"");
+            //});
+
+
+
+
         }
     }
 }

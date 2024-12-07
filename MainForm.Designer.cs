@@ -45,6 +45,7 @@
             this.tbClientUnit = new System.Windows.Forms.TextBox();
             this.tbServerUnit = new System.Windows.Forms.TextBox();
             this.txtClientStatus = new System.Windows.Forms.TextBox();
+            this.txtServerStatus = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DgvList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,7 +82,7 @@
             this.tbClientIp.Name = "tbClientIp";
             this.tbClientIp.Size = new System.Drawing.Size(100, 20);
             this.tbClientIp.TabIndex = 2;
-            this.tbClientIp.Text = "127.0.0.1";
+            this.tbClientIp.Text = "192.168.1.1";
             // 
             // tbClientPort
             // 
@@ -115,7 +116,7 @@
             this.tbServerIp.Name = "tbServerIp";
             this.tbServerIp.Size = new System.Drawing.Size(100, 20);
             this.tbServerIp.TabIndex = 2;
-            this.tbServerIp.Text = "127.0.0.1";
+            this.tbServerIp.Text = "192.168.1.2";
             // 
             // tbServerPort
             // 
@@ -198,11 +199,22 @@
             this.txtClientStatus.Text = "status";
             this.txtClientStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // txtServerStatus
+            // 
+            this.txtServerStatus.Location = new System.Drawing.Point(487, 11);
+            this.txtServerStatus.Name = "txtServerStatus";
+            this.txtServerStatus.ReadOnly = true;
+            this.txtServerStatus.Size = new System.Drawing.Size(98, 20);
+            this.txtServerStatus.TabIndex = 9;
+            this.txtServerStatus.Text = "status";
+            this.txtServerStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(978, 557);
+            this.Controls.Add(this.txtServerStatus);
             this.Controls.Add(this.txtClientStatus);
             this.Controls.Add(this.tbServerUnit);
             this.Controls.Add(this.tbClientUnit);
@@ -248,6 +260,7 @@
         private System.Windows.Forms.TextBox tbClientUnit;
         private System.Windows.Forms.TextBox tbServerUnit;
         private System.Windows.Forms.TextBox txtClientStatus;
+        private System.Windows.Forms.TextBox txtServerStatus;
     }
 }
 
